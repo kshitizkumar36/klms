@@ -284,10 +284,13 @@ section, div, img {
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
-  <a href="#features" onclick="toggleMenu()">Features</a>
-  <a href="#courses" onclick="toggleMenu()">Courses</a>
-  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
-  <a href="#login" onclick="toggleMenu()">Login</a>
+    <a href="#features">Features</a>
+    <a href="#courses">Courses</a>
+    <a href="#pricing">Pricing</a>
+    <a href="{{ url('login')}}">Login</a>
+    <a href="{{ url('student_dashboard')}}">Student Dashboard</a>
+    <a href="{{ url('instructor_dashboard')}}">Instructor Dashboard</a>
+  </nav>
 </div>
 
 <!-- HERO -->
