@@ -307,7 +307,7 @@ html, body {
     </div>
 
     <p style="text-align:center; margin-top:30px;">
-      Don't have an account? <a href="#" class="forgot-link">Sign Up</a>
+      Don't have an account? <a href="{{ url('signup')}}" class="forgot-link">Sign Up</a>
     </p>
   </div>
 
