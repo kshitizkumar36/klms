@@ -270,6 +270,8 @@ section, div, img {
     <a href="#courses">Courses</a>
     <a href="#pricing">Pricing</a>
     <a href="#login">Login</a>
+    <a href="{{ url('student_dashboard')}}">Student Dashboard</a>
+    <a href="{{ url('instructor_dashboard')}}">Instructor Dashboard</a>
   </nav>
 
   <div class="menu-btn" onclick="toggleMenu()">
