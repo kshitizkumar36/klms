@@ -269,7 +269,7 @@ section, div, img {
     <a href="#features">Features</a>
     <a href="#courses">Courses</a>
     <a href="#pricing">Pricing</a>
-    <a href="#login">Login</a>
+    <a href="{{ url('login')}}">Login</a>
     <a href="{{ url('student_dashboard')}}">Student Dashboard</a>
     <a href="{{ url('instructor_dashboard')}}">Instructor Dashboard</a>
   </nav>

@@ -17,3 +17,7 @@ Route::get('/instructor_dashboard', function () {
     return view('dashboard/instructor');
 });
 
+Route::get('/login', function () {
+    return view('auth/login');
+});
+
