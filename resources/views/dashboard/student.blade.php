@@ -368,15 +368,9 @@ html,body{
       <h2>LMS Panel</h2>
     </div>
 
-    <nav>
-      <a href="#" class="active">🏠 Dashboard</a>
-      <a href="{{url('student_course')}}">📚 My Courses</a>
-      <a href="#">⏳ Resume Learning</a>
-      <a href="#">❤️ Wishlist</a>
-      <a href="#">⚙ Settings</a>
-    </nav>
-
-  </aside>
+<!-- menu area -->
+ @include('dashboard.student.layouts.menu')
+  </aside> 
 
   <!-- MAIN AREA -->
   <div class="main">

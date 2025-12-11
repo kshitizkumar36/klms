@@ -37,3 +37,17 @@ Route::get('/course_player', function () {
 
 
 
+Route::get('/student_wishlist', function () {
+    return view('dashboard.student.wishlist');
+});
+
+
+Route::get('/student_learnings', function () {
+    return view('dashboard.student.learning');
+});
+
+
+Route::get('/student_setting', function () {
+    return view('dashboard.student.setting');
+});
+

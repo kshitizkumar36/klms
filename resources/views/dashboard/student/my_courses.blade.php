@@ -162,13 +162,7 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
       <img src="https://kshitizkumar.com/assets/img/klogo.png" alt="Logo">
       <h2>LMS Panel</h2>
     </div>
-    <nav>
-      <a href="dashboard.html">🏠 Dashboard</a>
-      <a href="#" class="active">📚 My Courses</a>
-      <a href="#">⏳ Resume Learning</a>
-      <a href="#">❤️ Wishlist</a>
-      <a href="#">⚙ Settings</a>
-    </nav>
+   @include('dashboard.student.layouts.menu')
   </aside>
 
   <div class="main">
