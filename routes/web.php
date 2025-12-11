@@ -51,3 +51,23 @@ Route::get('/student_setting', function () {
     return view('dashboard.student.setting');
 });
 
+
+
+
+// instructor
+
+
+Route::get('/instructor_courses', function () {
+    return view('dashboard.instructor.my_courses');
+});
+
+
+Route::get('/create_course', function () {
+    return view('dashboard.instructor.create_course');
+});
+
+Route::get('/edit_course{id}', function () {
+    return view('dashboard.instructor.edit_course');
+});
+
+
