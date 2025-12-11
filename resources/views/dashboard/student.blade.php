@@ -370,7 +370,7 @@ html,body{
 
     <nav>
       <a href="#" class="active">🏠 Dashboard</a>
-      <a href="#">📚 My Courses</a>
+      <a href="{{url('student_course')}}">📚 My Courses</a>
       <a href="#">⏳ Resume Learning</a>
       <a href="#">❤️ Wishlist</a>
       <a href="#">⚙ Settings</a>

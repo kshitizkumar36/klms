@@ -25,3 +25,15 @@ Route::get('/signup', function () {
     return view('auth/signup');
 });
 
+
+
+Route::get('/student_course', function () {
+    return view('dashboard.student/my_courses');
+});
+
+Route::get('/course_player', function () {
+    return view('dashboard.student/course_player');
+});
+
+
+
