@@ -31,7 +31,7 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
 /* LAYOUT */
 .layout{ display:flex; }
 
-/* SIDEBAR CSS (Updated for Toggle) */
+/* SIDEBAR */
 .sidebar{ 
   width:260px; 
   background:#111317; 
@@ -43,13 +43,10 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
   box-shadow:var(--shadow); 
   z-index:9999; 
   transition:transform .25s ease; 
-  transform:translateX(0); /* Default Visible */
+  transform:translateX(0);
 }
 
-/* Hide class for Mobile logic */
-.sidebar.hide{ 
-  transform:translateX(-100%); 
-}
+.sidebar.hide{ transform:translateX(-100%); }
 
 .sidebar .logo{ display:flex; align-items:center; gap:10px; margin-bottom:30px; }
 .sidebar .logo img{ width:42px; }
@@ -58,42 +55,41 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
 .sidebar nav a:hover, .sidebar nav a.active{ background:#1e1f25; color:#fff; }
 
 /* OVERLAY */
-.overlay{
-  position:fixed; inset:0; background:rgba(0,0,0,0.55); display:none; z-index:5000;
-}
+.overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.55); display:none; z-index:5000; }
 .overlay.show{ display:block; }
 
+/* MAIN CONTENT */
+.main{ 
+  margin-left:260px; 
+  width:calc(100% - 260px); 
+  transition:.3s; 
+  min-height:100vh; 
+  display:flex; 
+  flex-direction:column; 
+}
 
-.main{ margin-left:260px; width:calc(100% - 260px); transition:.3s; min-height:100vh; display:flex; flex-direction:column; }
-
+/* TOPBAR */
 .topbar{ display:flex; justify-content:space-between; align-items:center; padding:14px 24px; background:rgba(17, 19, 23, 0.95); position:sticky; top:0; z-index:50; border-bottom:1px solid #1e1f25; backdrop-filter:blur(10px); }
 .search{ background:#1c1e24; padding:8px 14px; border-radius:10px; display:flex; gap:8px; align-items:center; }
 .search input{ background:transparent; border:none; outline:none; width:250px; color:var(--text); }
+.hamburger{ display:none; font-size:26px; cursor:pointer; background:#1e1f25; padding:8px 12px; border-radius:8px; user-select:none; }
 
-/* Hamburger Button */
-.hamburger{
-  display:none; font-size:26px; cursor:pointer; background:#1e1f25; padding:8px 12px; border-radius:8px; user-select:none;
-}
-
-/* --- RESUME LEARNING SPECIFIC STYLES --- */
+/* RESUME PAGE STYLES */
 .content-padding{ padding:30px; max-width:1200px; margin:0 auto; width:100%; }
 
 .section-title{ font-size:20px; font-weight:700; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
 
-/* HERO CARD (Most Recent) */
+/* HERO CARD */
 .resume-hero{
   background:var(--card); border-radius:var(--radius); overflow:hidden;
   display:flex; border:1px solid #1e1f25; box-shadow:var(--shadow);
   margin-bottom:40px; min-height:280px; position:relative;
 }
 
-.hero-thumb{
-  width:55%; position:relative; overflow:hidden; cursor:pointer;
-}
+.hero-thumb{ width:55%; position:relative; overflow:hidden; cursor:pointer; }
 .hero-thumb img{ width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
 .resume-hero:hover .hero-thumb img{ transform:scale(1.03); }
 
-/* Overlay on Hero Image */
 .hero-overlay{
   position:absolute; inset:0; background:rgba(0,0,0,0.3);
   display:flex; justify-content:center; align-items:center;
@@ -124,7 +120,6 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
 .hero-course-title{ font-size:14px; color:var(--muted); font-weight:600; margin-bottom:5px; }
 .hero-lesson-title{ font-size:24px; font-weight:800; line-height:1.3; margin-bottom:20px; }
 
-/* Progress */
 .prog-container{ margin-bottom:25px; }
 .prog-text{ display:flex; justify-content:space-between; font-size:13px; color:#ccc; margin-bottom:8px; }
 .prog-track{ width:100%; height:8px; background:#222; border-radius:10px; overflow:hidden; }
@@ -136,7 +131,7 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
 }
 .btn-hero:hover{ background:#fff; transform:translateY(-2px); }
 
-/* GRID FOR OTHERS */
+/* GRID */
 .history-grid{
   display:grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap:20px;
 }
@@ -146,24 +141,37 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
   display:flex; gap:15px; align-items:center; transition:0.2s; cursor:pointer; text-decoration:none; color:inherit;
 }
 .h-card:hover{ background:#1a1d24; border-color:#333; }
-
 .h-img{ width:100px; height:70px; border-radius:8px; object-fit:cover; }
 .h-info{ flex:1; }
 .h-title{ font-size:15px; font-weight:600; margin-bottom:4px; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden;}
 .h-lec{ font-size:13px; color:var(--muted); margin-bottom:8px; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden;}
 .h-time{ font-size:11px; color:#666; font-style:italic; }
 
-/* RESPONSIVE */
+/* ---- MOBILE RESPONSIVE FIX ---- */
 @media(max-width:900px){
   .hamburger{ display:block; }
-  .main{ margin-left:0; }
+  
+  /* Reset Main Width */
+  .main{ 
+    margin-left:0; 
+    width:100%; /* Important Fix */
+  }
 
-  /* Default hidden on mobile */
   .sidebar.hide{ transform:translateX(-100%); }
+  
+  .content-padding{ padding: 20px; } /* Less padding on mobile */
 
-  .resume-hero{ flex-direction:column; }
-  .hero-thumb, .hero-info{ width:100%; }
-  .hero-thumb{ height:200px; }
+  /* Hero Card Column Layout */
+  .resume-hero{ flex-direction:column; min-height:auto; }
+  
+  .hero-thumb{ width:100%; height:200px; }
+  .hero-info{ width:100%; border-left:none; border-top:1px solid #222; padding:20px; }
+  
+  /* Grid Adjustment */
+  .history-grid{ grid-template-columns:1fr; }
+  
+  /* Search Box Size */
+  .search input{ width: 140px; }
 }
 
 </style>
@@ -223,8 +231,7 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
       </div>
 
       <div class="section-title">🕒 Recently Viewed</div>
-      <div class="history-grid" id="historyGrid">
-        </div>
+      <div class="history-grid" id="historyGrid"></div>
 
     </div>
   </div>
@@ -232,43 +239,18 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
 
 <script>
 /* -----------------------------------
-   RECENT HISTORY DATA
+   HISTORY DATA
 ------------------------------------*/
 const historyData = [
-  {
-    course: "Mastering Figma: UI/UX Design",
-    lesson: "4. Auto Layout Basics",
-    img: "https://picsum.photos/id/3/200/150",
-    time: "Watched 2 hours ago",
-    percent: 30
-  },
-  {
-    course: "Python for Data Science",
-    lesson: "8. Pandas Dataframes",
-    img: "https://picsum.photos/id/20/200/150",
-    time: "Watched yesterday",
-    percent: 15
-  },
-  {
-    course: "AWS Certified Solutions Arch.",
-    lesson: "22. S3 Bucket Policies",
-    img: "https://picsum.photos/id/60/200/150",
-    time: "Watched 2 days ago",
-    percent: 60
-  },
-  {
-    course: "Modern Docker & Kubernetes",
-    lesson: "10. Docker Compose",
-    img: "https://picsum.photos/id/119/200/150",
-    time: "Watched 4 days ago",
-    percent: 90
-  }
+  { course: "Mastering Figma: UI/UX Design", lesson: "4. Auto Layout Basics", img: "https://picsum.photos/id/3/200/150", time: "Watched 2 hours ago", percent: 30 },
+  { course: "Python for Data Science", lesson: "8. Pandas Dataframes", img: "https://picsum.photos/id/20/200/150", time: "Watched yesterday", percent: 15 },
+  { course: "AWS Certified Solutions Arch.", lesson: "22. S3 Bucket Policies", img: "https://picsum.photos/id/60/200/150", time: "Watched 2 days ago", percent: 60 },
+  { course: "Modern Docker & Kubernetes", lesson: "10. Docker Compose", img: "https://picsum.photos/id/119/200/150", time: "Watched 4 days ago", percent: 90 }
 ];
 
 function renderHistory(){
   const grid = document.getElementById('historyGrid');
   grid.innerHTML = "";
-
   historyData.forEach(item => {
     grid.innerHTML += `
       <a href="course_player" class="h-card">
@@ -285,40 +267,36 @@ function renderHistory(){
     `;
   });
 }
-
 renderHistory();
 
-
 /* -----------------------------------
-   SIDEBAR TOGGLE LOGIC (Fixed for Mobile)
+   SIDEBAR & RESPONSIVE LOGIC
 ------------------------------------*/
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const hamburger = document.getElementById("hamburger");
 
-// Mobile: Click Hamburger -> Show Sidebar (Remove 'hide')
+// Click Hamburger -> Show Sidebar
 hamburger.onclick = () => {
   sidebar.classList.remove("hide");
   overlay.classList.add("show");
 };
 
-// Mobile: Click Overlay -> Hide Sidebar (Add 'hide')
+// Click Overlay -> Hide Sidebar
 overlay.onclick = () => {
   sidebar.classList.add("hide");
   overlay.classList.remove("show");
 };
 
-// Auto-Fix on Resize (Desktop vs Mobile)
+// Resize Handler
 function fixSidebar(){
   if(window.innerWidth > 900){
-    sidebar.classList.remove("hide"); // Desktop: Always visible
+    sidebar.classList.remove("hide");
     overlay.classList.remove("show");
   } else {
-    sidebar.classList.add("hide");    // Mobile: Hidden by default
+    sidebar.classList.add("hide");
   }
 }
-
-// Init & Resize Listener
 fixSidebar();
 window.onresize = fixSidebar;
 
