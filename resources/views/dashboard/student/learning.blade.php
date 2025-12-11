@@ -30,17 +30,50 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
 
 /* LAYOUT */
 .layout{ display:flex; }
-.sidebar{ width:260px; background:#111317; height:100vh; position:fixed; left:0; top:0; padding:22px; box-shadow:var(--shadow); z-index:9999; transition:transform .25s ease; }
-.sidebar.hide{ transform:translateX(-100%); }
+
+/* SIDEBAR CSS (Updated for Toggle) */
+.sidebar{ 
+  width:260px; 
+  background:#111317; 
+  height:100vh; 
+  position:fixed; 
+  left:0; 
+  top:0; 
+  padding:22px; 
+  box-shadow:var(--shadow); 
+  z-index:9999; 
+  transition:transform .25s ease; 
+  transform:translateX(0); /* Default Visible */
+}
+
+/* Hide class for Mobile logic */
+.sidebar.hide{ 
+  transform:translateX(-100%); 
+}
+
 .sidebar .logo{ display:flex; align-items:center; gap:10px; margin-bottom:30px; }
 .sidebar .logo img{ width:42px; }
 .sidebar nav{ display:flex; flex-direction:column; gap:10px; }
 .sidebar nav a{ color:var(--muted); padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:600; transition:0.3s; }
 .sidebar nav a:hover, .sidebar nav a.active{ background:#1e1f25; color:#fff; }
+
+/* OVERLAY */
+.overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,0.55); display:none; z-index:5000;
+}
+.overlay.show{ display:block; }
+
+
 .main{ margin-left:260px; width:calc(100% - 260px); transition:.3s; min-height:100vh; display:flex; flex-direction:column; }
+
 .topbar{ display:flex; justify-content:space-between; align-items:center; padding:14px 24px; background:rgba(17, 19, 23, 0.95); position:sticky; top:0; z-index:50; border-bottom:1px solid #1e1f25; backdrop-filter:blur(10px); }
 .search{ background:#1c1e24; padding:8px 14px; border-radius:10px; display:flex; gap:8px; align-items:center; }
 .search input{ background:transparent; border:none; outline:none; width:250px; color:var(--text); }
+
+/* Hamburger Button */
+.hamburger{
+  display:none; font-size:26px; cursor:pointer; background:#1e1f25; padding:8px 12px; border-radius:8px; user-select:none;
+}
 
 /* --- RESUME LEARNING SPECIFIC STYLES --- */
 .content-padding{ padding:30px; max-width:1200px; margin:0 auto; width:100%; }
@@ -122,18 +155,17 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
 
 /* RESPONSIVE */
 @media(max-width:900px){
-  .sidebar{ transform:translateX(-100%); }
-  .sidebar.show{ transform:translateX(0); }
-  .main{ margin-left:0; width:100%; }
-  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:5000; display:none; }
-  .overlay.show{ display:block; }
-  .hamburger{ display:block; cursor:pointer; font-size:24px; padding:5px 10px; background:#222; border-radius:6px; }
-  
+  .hamburger{ display:block; }
+  .main{ margin-left:0; }
+
+  /* Default hidden on mobile */
+  .sidebar.hide{ transform:translateX(-100%); }
+
   .resume-hero{ flex-direction:column; }
   .hero-thumb, .hero-info{ width:100%; }
   .hero-thumb{ height:200px; }
 }
-.hamburger{ display:none; }
+
 </style>
 </head>
 <body>
@@ -142,12 +174,12 @@ html,body{ width:100%; min-height:100vh; background:var(--bg); color:var(--text)
 
 <div class="layout">
 
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar hide" id="sidebar">
     <div class="logo">
       <img src="https://kshitizkumar.com/assets/img/klogo.png" alt="Logo">
       <h2>LMS Panel</h2>
     </div>
-     @include('dashboard.student.layouts.menu')
+    @include('dashboard.student.layouts.menu')
   </aside>
 
   <div class="main">
@@ -258,21 +290,38 @@ renderHistory();
 
 
 /* -----------------------------------
-   SIDEBAR TOGGLE
+   SIDEBAR TOGGLE LOGIC (Fixed for Mobile)
 ------------------------------------*/
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const hamburger = document.getElementById("hamburger");
 
+// Mobile: Click Hamburger -> Show Sidebar (Remove 'hide')
 hamburger.onclick = () => {
-  sidebar.classList.add("show");
+  sidebar.classList.remove("hide");
   overlay.classList.add("show");
 };
 
+// Mobile: Click Overlay -> Hide Sidebar (Add 'hide')
 overlay.onclick = () => {
-  sidebar.classList.remove("show");
+  sidebar.classList.add("hide");
   overlay.classList.remove("show");
 };
+
+// Auto-Fix on Resize (Desktop vs Mobile)
+function fixSidebar(){
+  if(window.innerWidth > 900){
+    sidebar.classList.remove("hide"); // Desktop: Always visible
+    overlay.classList.remove("show");
+  } else {
+    sidebar.classList.add("hide");    // Mobile: Hidden by default
+  }
+}
+
+// Init & Resize Listener
+fixSidebar();
+window.onresize = fixSidebar;
+
 </script>
 
 </body>
