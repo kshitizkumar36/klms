@@ -60,6 +60,7 @@ html, body {
   z-index: 9999;
 }
 
+/* Hide Sidebar Logic */
 .sidebar.hide { transform: translateX(-100%); }
 
 .sidebar .logo {
@@ -108,26 +109,31 @@ html, body {
   transition: .3s;
 }
 
-/* TOPBAR */
+/* TOPBAR STYLING FIX */
 .topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Ensures Left and Right alignment */
   padding: 14px 24px;
   background: #111317;
   position: sticky;
   top: 0;
   border-bottom: 1px solid #1e1f25;
   z-index: 50;
+  height: 70px; /* Fixed height for consistency */
 }
 
+/* Hamburger Button */
 .hamburger {
   display: none;
   background: #1e1f25;
   padding: 8px 12px;
   border-radius: 8px;
-  font-size: 26px;
+  font-size: 24px;
   cursor: pointer;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
 }
 
 /* SEARCH */
@@ -149,11 +155,16 @@ html, body {
 }
 
 /* PROFILE MENU */
-.profile-icon { position: relative; cursor: pointer; }
+.profile-icon { 
+  display: flex;
+  align-items: center;
+  position: relative; 
+  cursor: pointer; 
+}
 
 .profile-dropdown {
   position: absolute;
-  top: 52px;
+  top: 55px;
   right: 0;
   width: 160px;
   background: #1a1c22;
@@ -161,6 +172,7 @@ html, body {
   display: none;
   padding: 8px 0;
   box-shadow: var(--shadow);
+  z-index: 100;
 }
 
 .profile-dropdown.show { display: block; }
@@ -204,6 +216,8 @@ html, body {
   display: flex;
   gap: 20px;
   padding: 0 20px;
+  position: relative;
+  z-index: 10;
 }
 
 .profile-pic {
@@ -291,13 +305,26 @@ html, body {
 }
 .pagination button.active { background: var(--accent); }
 
-/* RESPONSIVE */
+/* RESPONSIVE FIXES */
 @media(max-width:900px){
-  .hamburger { display: block; }
-  .main { margin-left: 0; }
-  .sidebar.hide { transform: translateX(-100%); }
-  .profile-box { flex-direction: column; text-align: center; }
+  /* Show Hamburger */
+  .hamburger { display: flex; }
+  
+  /* Hide Search on Mobile to fix alignment issues */
+  .search { display: none; }
+  
+  /* Reset Main Margin */
+  .main { margin-left: 0; width: 100%; }
+  
+  /* Ensure Sidebar is hidden correctly logic-wise */
+  .sidebar.hide { transform: translateX(-100%); } 
+
+  /* Profile Layout Stack */
+  .profile-box { flex-direction: column; text-align: center; align-items: center;}
   .stats { grid-template-columns: 1fr; }
+  
+  /* Adjust Topbar Padding for Mobile */
+  .topbar { padding: 10px 15px; }
 }
 </style>
 </head>
@@ -308,31 +335,28 @@ html, body {
 
 <div class="layout">
 
-<!-- SIDEBAR -->
-<aside class="sidebar " id="sidebar">
+<aside class="sidebar" id="sidebar">
   <div class="logo">
     <img src="https://kshitizkumar.com/assets/img/klogo.png" />
     <h2>Instructor</h2>
   </div>
 
-<!-- menu -->
-
-@include('dashboard.instructor.layouts.menu')
+  @include('dashboard.instructor.layouts.menu')
 </aside>
 
-<!-- MAIN -->
 <div class="main">
 
-  <!-- TOP BAR -->
   <div class="topbar fade">
-    <div class="hamburger" id="hamburger">☰</div>
+    <div class="hamburger" id="hamburger">
+      <i class="bi bi-list"></i> ☰
+    </div>
 
     <div class="search">🔍
       <input placeholder="Search courses..." id="courseSearch" onkeyup="filterCourses()" />
     </div>
 
     <div class="profile-icon" id="profileBtn">
-      <img src="https://i.pravatar.cc/60" style="width:42px;height:42px;border-radius:10px;" />
+      <img src="https://i.pravatar.cc/60" style="width:42px;height:42px;border-radius:10px; object-fit: cover;" />
       <div class="profile-dropdown" id="dropdown">
         <a href="#">Edit Profile</a>
         <a href="#">Logout</a>
@@ -340,14 +364,12 @@ html, body {
     </div>
   </div>
 
-  <!-- HEADER VIDEO -->
   <div class="profile-header fade fade-delay-1">
     <video autoplay muted loop>
       <source src="{{ asset('assets/clips/slide_logo.mp4') }}" type="video/mp4" />
     </video>
   </div>
 
-  <!-- PROFILE BOX -->
   <div class="profile-box fade fade-delay-2">
     <img src="https://i.pravatar.cc/150?img=36" class="profile-pic" />
 
@@ -366,7 +388,6 @@ html, body {
     </div>
   </div>
 
-  <!-- STATS -->
   <div class="stats fade fade-delay-3">
     <div class="stat-card">
       <h3>Total Courses</h3>
@@ -382,7 +403,6 @@ html, body {
     </div>
   </div>
 
-  <!-- COURSES -->
   <div class="courses fade fade-delay-3">
     <h2>My Courses</h2>
     <div id="courseList"></div>
@@ -410,10 +430,8 @@ const perPage = 3;
 function renderCourses() {
   let list = document.getElementById("courseList");
   list.innerHTML = "";
-
   let start = (currentPage - 1) * perPage;
   let end = start + perPage;
-
   filtered.slice(start, end).forEach(c => {
     list.innerHTML += `
       <div class="course-item">
@@ -421,13 +439,11 @@ function renderCourses() {
         <div style="flex:1">
           <h3>${c.title}</h3>
           <p style="color:var(--muted);">🔥 ${c.sold} Students Enrolled</p>
-
           <div class="progress"><div style="width:${Math.min(c.sold / 4, 100)}%"></div></div>
         </div>
       </div>
     `;
   });
-
   renderPagination();
 }
 
@@ -435,7 +451,6 @@ function renderPagination() {
   let pages = Math.ceil(filtered.length / perPage);
   let pag = document.getElementById("pagination");
   pag.innerHTML = "";
-
   for (let i = 1; i <= pages; i++) {
     pag.innerHTML += `
       <button class="${i===currentPage?'active':''}" onclick="go(${i})">${i}</button>
@@ -451,28 +466,28 @@ function filterCourses() {
   currentPage = 1;
   renderCourses();
 }
-
 renderCourses();
 
-/* SIDEBAR */
+/* JS LOGIC FOR SIDEBAR & PROFILE */
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const hamburger = document.getElementById("hamburger");
-
-hamburger.onclick = () => {
-  sidebar.classList.remove("hide");
-  overlay.classList.add("show");
-};
-
-overlay.onclick = () => {
-  sidebar.classList.add("hide");
-  overlay.classList.remove("show");
-};
-
-/* PROFILE DROPDOWN */
 const profileBtn = document.getElementById("profileBtn");
 const dropdown = document.getElementById("dropdown");
 
+// Toggle Sidebar
+hamburger.onclick = () => {
+  sidebar.classList.remove("hide"); 
+  overlay.classList.add("show");
+};
+
+// Close Sidebar via Overlay
+overlay.onclick = () => {
+  sidebar.classList.add("hide"); 
+  overlay.classList.remove("show");
+};
+
+// Toggle Profile
 profileBtn.onclick = e => {
   e.stopPropagation();
   dropdown.classList.toggle("show");
@@ -480,19 +495,20 @@ profileBtn.onclick = e => {
 
 document.body.onclick = () => dropdown.classList.remove("show");
 
-
+/* AUTO-HIDE SIDEBAR ON MOBILE LOAD */
 function fixSidebar() {
-  if (window.innerWidth > 900) {
-    sidebar.classList.remove("hide");   // DESKTOP → SHOW sidebar
+  if (window.innerWidth <= 900) {
+    sidebar.classList.add("hide"); // Mobile: Hide by default
     overlay.classList.remove("show");
   } else {
-    sidebar.classList.add("hide");      // MOBILE → HIDE sidebar
+    sidebar.classList.remove("hide"); // Desktop: Show
   }
 }
+// Run on load and resize
+fixSidebar();
+window.onresize = fixSidebar;
 
 </script>
-
-
 
 </body>
 </html>
