@@ -1,14 +1,14 @@
   <nav>
-    <a href="#" class="active">🏠 Dashboard</a>
+    <a href="{{ url('instructor_dashboard')}}" class="active">🏠 Dashboard</a>
     <a href="{{ url('instructor_courses')}}">📚 My Courses</a>
-    <a href="#">📝 Quiz</a>
-    <a href="#">💰 Earnings</a> 
-    <a href="#">👨‍🎓 Students</a>
-    <a href="#">🛒 Orders</a>
-    <a href="#">⭐ Reviews</a>
-    <a href="#">✏ Edit Profile</a>
-    <a href="#">💳 Payouts</a>
-    <a href="#">⚙ Settings</a>
-    <a href="#" style="color:#ff6b6b;">🗑 Delete Profile</a>
-    <a href="#">🚪 Sign Out</a>
+    <a href="{{ url('instructor_quiz')}}">📝 Quiz</a>
+    <a href="{{ url('instructor_courses')}}">💰 Earnings</a> 
+    <a href="{{ url('instructor_courses')}}">👨‍🎓 Students</a>
+    <a href="{{ url('instructor_courses')}}">🛒 Orders</a>
+    <a href="{{ url('instructor_courses')}}">⭐ Reviews</a>
+    <a href="{{ url('instructor_courses')}}">✏ Edit Profile</a>
+    <a href="{{ url('instructor_courses')}}">💳 Payouts</a>
+    <a href="{{ url('instructor_courses')}}">⚙ Settings</a>
+    <a href="{{ url('instructor_courses')}}" style="color:#ff6b6b;">🗑 Delete Profile</a>
+    <a href="{{ url('instructor_courses')}}">🚪 Sign Out</a>
   </nav>

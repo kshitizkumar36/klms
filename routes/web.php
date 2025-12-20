@@ -71,3 +71,18 @@ Route::get('/edit_course{id}', function () {
 });
 
 
+
+
+Route::get('/instructor_quiz', function () {
+    return view('dashboard.instructor.quiz');
+});
+
+
+Route::get('/create_quiz', function () {
+    return view('dashboard.instructor.create_quiz');
+});
+
+
+Route::get('/create_quiz_2', function () {
+    return view('dashboard.instructor.create_quiz_2');
+});
